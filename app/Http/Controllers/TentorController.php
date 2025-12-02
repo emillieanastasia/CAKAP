@@ -87,7 +87,7 @@ class TentorController extends Controller
             ]);
 
             return redirect()
-                ->route('tentor')
+                ->route('tentor.index')
                 ->with('success', 'Tentor baru berhasil ditambahkan dan dihubungkan!');
         });
     }
@@ -120,14 +120,14 @@ class TentorController extends Controller
         ]);
 
         return redirect()
-            ->route('tentor')
+            ->route('tentor.index')
             ->with('success', 'Data tentor berhasil diperbarui.');
     }
 
     public function editSelf()
     {
         $tentor = Tentor::where('user_id', Auth::id())->firstOrFail();
-        return view('tentor.self-edit', compact('tentor'));
+        return view('tentor.edit', compact('tentor'));
     }
 
     public function updateSelf(Request $request)
@@ -159,7 +159,7 @@ class TentorController extends Controller
         $tentor->delete();
 
         return redirect()
-            ->route('tentor')
+            ->route('tentor.index')
             ->with('success', 'Data tentor berhasil dihapus.');
     }
 }
