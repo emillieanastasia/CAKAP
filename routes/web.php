@@ -51,23 +51,15 @@ Route::middleware('auth')->group(function () {
 
 // --- Group Tentor ---
 Route::middleware(['auth'])->group(function() {
-    Route::get('/dashboard-tentor', [DashboardController::class, 'dashboardTentor'])->name('dashboard-tentor');
-    Route::get('/tentor', [TentorController::class, 'index'])->name('tentor.index');
+     Route::get('/dashboard-tentor',[DashboardController::class,'dashboardTentor'])->name('dashboard-tentor');
+    Route::get('/tentor', [tentorcontroller::class, 'index'])->name('tentor.index');
     Route::get('/tentor/create', [TentorController::class, 'create'])->name('tentor.create');
     Route::post('/tentor', [TentorController::class, 'store'])->name('tentor.store');
-    
-    // [MODIFIED] Ini harus beda nama sama Siswa. 
-    // KALAU ERROR di View Tentor, cari `route('edit.profil')` ganti jadi `route('tentor.edit.profil')`
-    Route::get('/tentor/edit/{id}', [TentorController::class, 'edit'])->name('tentor.edit.profil');
-    
-    // [RESTORED] Kembalikan ke nama asli
-    Route::put('/tentor/update/{id}', [TentorController::class, 'update'])->name('update.profil');
-    
-    Route::delete('/tentor/{id}', [TentorController::class, 'destroy'])->name('tentor.destroy');
-    
-    // Route ini sepertinya duplikat fitur edit profil, tapi saya biarkan dengan nama beda
-    Route::get('/profil/tentor/edit', [DashboardController::class, 'editProfil'])->name('tentor.dashboard.edit.profil');
-    Route::put('/profil/tentor/update', [DashboardController::class, 'updateProfil'])->name('tentor.dashboard.update.profil');
+    Route::get('/tentor/edit/{id}', [TentorController::class, 'edit'])->name('tentor.edit.by.admin');
+    Route::put('/tentor/update/{id}', [TentorController::class, 'update'])->name('tentor.update.by.admin'); 
+    Route::delete('/tentor/{id}', [tentorcontroller::class, 'destroy'])->name('tentor.destroy');
+    Route::get('/profil/edit', [DashboardController::class, 'editProfil'])->name('tentor.edit.profil');
+    Route::put('/profil/update', [DashboardController::class, 'updateProfil'])->name('tentor.update.profil');
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
