@@ -3,12 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
-use App\Http\Middleware\AdminMiddleware;
-use App\Http\Middleware\TentorMiddleware;
-// --- FIX CASE SENSITIVITY IMPORTS ---
-use App\Http\Controllers\TentorController; // Huruf Besar
+use App\Http\Controllers\TentorController;
 use App\Http\Controllers\SiswaController;
-use App\Http\Controllers\AdminController;  // Huruf Besar
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MataPelajaranController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\JadwalController;
@@ -24,14 +21,14 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-// --- FIX DUPLICATE ROUTE (Hapus yang di luar group auth) ---
+// --- Group Auth Umum ---
 Route::middleware(['auth'])->group(function () {
-    // Route Absensi dipindah ke sini biar rapi & aman
     Route::get('/absensi/form/{kelas_id}', [AbsensiController::class, 'form'])->name('absensi.form');
     Route::post('/absensi/store', [AbsensiController::class, 'store'])->name('absensi.store');
     Route::get('/absensi/cetak/{kelas_id}', [AbsensiController::class, 'cetakPresensi'])->name('absensi.cetak');
 });
 
+// --- Group Siswa ---
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard-siswa', [DashboardController::class, 'dashboardSiswa'])->name('dashboard-siswa');
     Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
@@ -40,9 +37,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/siswa/{id}/edit', [SiswaController::class, 'edit'])->name('siswa.edit');
     Route::put('/siswa/{id}', [SiswaController::class, 'update'])->name('siswa.update');
     
-    // Profil Siswa
-    Route::get('/profil/edit', [SiswaController::class, 'editProfil'])->name('siswa.edit.profil'); // Ganti nama biar gak bentrok
-    Route::put('/profil/{id}/update', [SiswaController::class, 'updateProfil'])->name('siswa.profil.update');
+    // [RESTORED] Kembalikan ke nama asli biar View gak error
+    Route::get('/profil/edit', [SiswaController::class, 'editProfil'])->name('edit.profil'); 
+    Route::put('/profil/{id}/update', [SiswaController::class, 'updateProfil'])->name('profil.update');
     
     Route::delete('/siswa/{id}', [SiswaController::class, 'destroy'])->name('siswa.destroy');
     Route::post('/siswa/gabung-kelas', [DashboardController::class, 'storeKelas'])->name('siswa.store.kelas');
@@ -52,29 +49,28 @@ Route::middleware('auth')->group(function () {
     Route::delete('/siswa/kelas/{jadwal_id}', [DashboardController::class, 'destroyKelas'])->name('siswa.destroyKelas');
 });
 
+// --- Group Tentor ---
 Route::middleware(['auth'])->group(function() {
-    // --- FIX TYPO 'dashbaord' ---
     Route::get('/dashboard-tentor', [DashboardController::class, 'dashboardTentor'])->name('dashboard-tentor');
-    
-    // --- FIX CONTROLLER NAME (Huruf Besar) ---
     Route::get('/tentor', [TentorController::class, 'index'])->name('tentor.index');
     Route::get('/tentor/create', [TentorController::class, 'create'])->name('tentor.create');
     Route::post('/tentor', [TentorController::class, 'store'])->name('tentor.store');
     
-    // Profil Tentor (Ubah nama route biar beda sama siswa)
+    // [MODIFIED] Ini harus beda nama sama Siswa. 
+    // KALAU ERROR di View Tentor, cari `route('edit.profil')` ganti jadi `route('tentor.edit.profil')`
     Route::get('/tentor/edit/{id}', [TentorController::class, 'edit'])->name('tentor.edit.profil');
-    Route::put('/tentor/update/{id}', [TentorController::class, 'update'])->name('tentor.update.profil');
+    
+    // [RESTORED] Kembalikan ke nama asli
+    Route::put('/tentor/update/{id}', [TentorController::class, 'update'])->name('update.profil');
     
     Route::delete('/tentor/{id}', [TentorController::class, 'destroy'])->name('tentor.destroy');
     
-    // Ini sepertinya duplikat logic profil, tapi saya biarkan dengan nama beda
+    // Route ini sepertinya duplikat fitur edit profil, tapi saya biarkan dengan nama beda
     Route::get('/profil/tentor/edit', [DashboardController::class, 'editProfil'])->name('tentor.dashboard.edit.profil');
     Route::put('/profil/tentor/update', [DashboardController::class, 'updateProfil'])->name('tentor.dashboard.update.profil');
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
-    // --- FIX DUPLICATE ROUTE (Pilih satu yang benar) ---
-    // Saya pilih yang pakai DashboardController karena pola project ini sepertinya begitu
     Route::get('/dashboard-admin', [DashboardController::class, 'dashboardAdmin'])->name('dashboard-admin'); 
 });
 
@@ -88,7 +84,6 @@ Route::middleware(['auth'])->group(function() {
 });
 
 Route::middleware(['auth', 'verified'])->prefix('kelas')->name('kelas.')->group(function () {
-    // Ubah '/kelas' jadi '/' karena sudah ada prefix
     Route::get('/', [KelasController::class, 'index'])->name('index');
     Route::get('/create', [KelasController::class, 'create'])->name('create');
     Route::post('/', [KelasController::class, 'store'])->name('store');
@@ -123,7 +118,6 @@ Route::middleware(['auth', 'verified'])
         Route::get('/get-siswa-data/{siswaId}', [PembayaranController::class, 'getSiswaData'])->name('getSiswaData');
     });
 
-// Absensi Rekap (Di luar group pembayaran)
 Route::get('/absensi/kelas/{kelas}/rekap', [AbsensiController::class, 'rekap'])->name('absensi.rekap');
 
 require __DIR__.'/auth.php';
