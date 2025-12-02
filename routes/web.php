@@ -38,9 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/siswa/{id}', [SiswaController::class, 'update'])->name('siswa.update');
     
     // [RESTORED] Kembalikan ke nama asli biar View gak error
-    Route::get('/profil/edit', [SiswaController::class, 'editProfil'])->name('edit.profil');
-    Route::put('/profil/{id}/update', [SiswaController::class, 'updateProfil'])->name('profil.update');
-    
+    Route::get('/siswa/profil/edit', [SiswaController::class, 'editProfil'])->name('edit.profil');
+    Route::put('/siswa/profil/{id}/update', [SiswaController::class, 'updateProfil'])->name('profil.update');
     Route::delete('/siswa/{id}', [SiswaController::class, 'destroy'])->name('siswa.destroy');
     Route::post('/siswa/gabung-kelas', [DashboardController::class, 'storeKelas'])->name('siswa.store.kelas');
     Route::get('/siswa/pilih-kelas', [DashboardController::class, 'pilihKelas'])->name('siswa.pilih.kelas');
