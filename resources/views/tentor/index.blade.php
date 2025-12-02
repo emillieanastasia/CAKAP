@@ -109,7 +109,7 @@
                             <div class="flex justify-center items-center gap-1.5">
 
                                 {{-- EDIT BUTTON --}}
-                                <a href="{{ route('tentor-edit', $t->id) }}" 
+                                <a href="{{ route('tentor.edit.profil', $t->id) }}" 
                                     class="inline-block bg-gold hover:bg-lightgold text-navy font-bold px-3 py-1.5 rounded-lg text-xs shadow-md transition-all transform hover:-translate-y-0.5">
                                     
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" 
