@@ -29,7 +29,7 @@ class Siswa extends Model{
         return $this->hasMany(pembayaran::class);
     }
     public function kelas(){
-        return $this->belongsTo(Kelas::class, 'kelas_id');
+        return $this->belongsTo(Kelas::class, 'kelas','id');
     }
     public function jadwal()
     {

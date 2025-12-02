@@ -30,20 +30,25 @@ Route::middleware(['auth'])->group(function () {
 
 // --- Group Siswa ---
 Route::middleware('auth')->group(function () {
+    // Route Siswa
     Route::get('/dashboard-siswa', [DashboardController::class, 'dashboardSiswa'])->name('dashboard-siswa');
-    Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
+    Route::get('/siswa',[SiswaController::class,'index'])->name('siswa.index');
     Route::get('/siswa/create', [SiswaController::class, 'create'])->name('siswa.create');
     Route::post('/siswa', [SiswaController::class, 'store'])->name('siswa.store');
-    Route::get('/siswa/{id}/edit', [SiswaController::class, 'edit'])->name('siswa.edit');
-    Route::put('/siswa/{id}', [SiswaController::class, 'update'])->name('siswa.update');
-    
-    // [RESTORED] Kembalikan ke nama asli biar View gak error
+
+    // --- PERBAIKAN: Pindahkan Route Profil ke ATAS Route {id} ---
     Route::get('/siswa/profil/edit', [SiswaController::class, 'editProfil'])->name('edit.profil');
     Route::put('/siswa/profil/{id}/update', [SiswaController::class, 'updateProfil'])->name('profil.update');
+    // -------------------------------------------------------------
+
+    // Route dinamis dengan {id} diletakkan SETELAH route spesifik
+    Route::get('/siswa/{id}/edit', [SiswaController::class, 'edit'])->name('siswa.edit');
+    Route::put('/siswa/{id}', [SiswaController::class, 'update'])->name('siswa.update');
     Route::delete('/siswa/{id}', [SiswaController::class, 'destroy'])->name('siswa.destroy');
-    Route::post('/siswa/gabung-kelas', [DashboardController::class, 'storeKelas'])->name('siswa.store.kelas');
+
+    // Route Kelas Siswa (Sisa kode Anda...)
     Route::get('/siswa/pilih-kelas', [DashboardController::class, 'pilihKelas'])->name('siswa.pilih.kelas');
-    Route::post('/siswa/store-kelas', [DashboardController::class, 'storeKelas'])->name('siswa.storeKelas');
+    Route::post('/siswa/store-kelas', [DashboardController::class, 'storeKelas'])->name('siswa.storeKelas'); 
     Route::get('/siswa/rincian-kelas/{id}', [DashboardController::class, 'rincianKelas'])->name('siswa.rincian.kelas');
     Route::delete('/siswa/kelas/{jadwal_id}', [DashboardController::class, 'destroyKelas'])->name('siswa.destroyKelas');
 });

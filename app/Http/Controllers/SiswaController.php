@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\JadwalKelas;
 use App\Models\Siswa;
+use App\Models\Kelas;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -153,8 +154,13 @@ class SiswaController extends Controller
     {
         $user = auth()->user();
         $siswa = Siswa::firstOrNew(['user_id' => $user->id]);
-         $kelas = \App\Models\Kelas::all();
-        return view('siswa.edit-profil', compact('user', 'siswa'));
+        $kelas = Kelas::select('kelas', 'nama_kelas')
+        ->distinct()
+        ->orderBy('kelas')
+        ->orderBy('nama_kelas')
+        ->get();
+
+        return view('siswa.edit-profil', compact('user', 'siswa','kelas'));
     }
 
     public function updateProfil(Request $request, $id)

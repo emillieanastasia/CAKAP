@@ -54,38 +54,42 @@
                         <input type="password" name="password" placeholder="Kosongkan jika tetap" 
                             class="w-full bg-[#013C58] border border-[#A8E8F9]/30 rounded-md px-3 py-2 text-sm text-white placeholder-gray-400 focus:outline-none focus:border-[#FFD35B] focus:ring-1 focus:ring-[#FFD35B] transition">
                     </div>
-                    {{-- Kelas --}}
-<div>
-    <label class="block text-xs font-medium text-[#A8E8F9] mb-1">Kelas</label>
-    <select name="kelas" 
-        class="w-full bg-[#013C58] border border-[#A8E8F9]/30 rounded-md px-3 py-2 text-sm text-white focus:outline-none focus:border-[#FFD35B] focus:ring-1 focus:ring-[#FFD35B] transition">
 
-        <option value="">-- Pilih Kelas --</option>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
 
-        @foreach($kelas as $k)
-            <option value="{{ $k->id }}" 
-                @if(old('kelas', $siswa->kelas) == $k->id) selected @endif>
-                {{ $k->nama_kelas }}
-            </option>
-        @endforeach
-    </select>
-</div>
-
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                         {{-- Tanggal Lahir --}}
                         <div>
                             <label class="block text-xs font-medium text-[#A8E8F9] mb-1">Tanggal Lahir</label>
                             <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir', $siswa->tanggal_lahir) }}" 
-                                class="w-full bg-[#013C58] border border-[#A8E8F9]/30 rounded-md px-3 py-2 text-sm text-white placeholder-gray-400 focus:outline-none focus:border-[#FFD35B] focus:ring-1 focus:ring-[#FFD35B] transition">
+                                class="w-full bg-[#013C58] border border-[#A8E8F9]/30 rounded-md px-3 py-2 text-sm text-white focus:outline-none focus:border-[#FFD35B] transition">
                         </div>
 
                         {{-- No HP --}}
                         <div>
                             <label class="block text-xs font-medium text-[#A8E8F9] mb-1">No. Handphone</label>
                             <input type="text" name="no_hp" value="{{ old('no_hp', $siswa->no_hp) }}" 
-                                class="w-full bg-[#013C58] border border-[#A8E8F9]/30 rounded-md px-3 py-2 text-sm text-white placeholder-gray-400 focus:outline-none focus:border-[#FFD35B] focus:ring-1 focus:ring-[#FFD35B] transition">
+                                class="w-full bg-[#013C58] border border-[#A8E8F9]/30 rounded-md px-3 py-2 text-sm text-white focus:outline-none focus:border-[#FFD35B] transition">
                         </div>
+
+                        {{-- Kelas --}}
+                        <div>
+                            <label class="block text-xs font-medium text-[#A8E8F9] mb-1">Kelas</label>
+                            <select name="kelas" 
+                                class="w-full bg-[#013C58] border border-[#A8E8F9]/30 rounded-md px-3 py-2 text-sm text-white focus:outline-none focus:border-[#FFD35B] transition">
+                                
+                                <option value="">-- Pilih Kelas --</option>
+
+                               @foreach($kelas as $k)
+                                    <option value="{{ $k->kelas }}|{{ $k->nama_kelas }}"
+                                        @if(old('kelas', $siswa->kelas) == $k->kelas) selected @endif>
+                                        {{ $k->kelas }} - {{ $k->nama_kelas }}
+                                    </option>
+                                @endforeach
+
+
+                            </select>
+                        </div>
+
                     </div>
 
                     {{-- Alamat --}}
