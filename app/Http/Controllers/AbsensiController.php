@@ -47,7 +47,7 @@ class AbsensiController extends Controller{
         // UNTUK SEMENTARA: Kita gunakan ID jadwal pertama sebagai placeholder untuk kebutuhan form.
         $jadwal_kelas_id = $jadwalIds->first() ?? 0; 
 
-        return view('absensi.form', compact('kelas', 'siswa', 'jadwal_kelas_id'));
+        return view('Absensi.form', compact('kelas', 'siswa', 'jadwal_kelas_id'));
     }
 
 // app/Http/Controllers/AbsensiController.php (Metode store)
