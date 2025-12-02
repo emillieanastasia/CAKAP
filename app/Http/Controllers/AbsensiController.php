@@ -152,7 +152,7 @@ class AbsensiController extends Controller{
             })
             ->toArray();
             
-        return view('absensi.index',compact(
+        return view('Absensi.index',compact(
             'kelas','siswa','datesInMonth','selectedYear','selectedMonth','attendanceData','jadwal_kelas_id'
         ));
     }
@@ -206,7 +206,7 @@ class AbsensiController extends Controller{
     $datesInMonth = collect(range(1, $daysInMonth));
 
     // 7. Kirim ke View Cetak
-    return view('absensi.cetak-presensi', [
+    return view('Absensi.cetak-presensi', [
         'kelas' => $kelas,
         'mata_pelajaran' => $mata_pelajaran,
         'siswa' => $siswa,
