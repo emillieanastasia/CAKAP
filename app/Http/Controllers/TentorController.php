@@ -127,7 +127,7 @@ class TentorController extends Controller
     public function editSelf()
     {
         $tentor = Tentor::where('user_id', Auth::id())->firstOrFail();
-        return view('tentor.edit', compact('tentor'));
+        return view('tentor.edit-profil', compact('tentor'));
     }
 
     public function updateSelf(Request $request)
