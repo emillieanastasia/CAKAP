@@ -71,4 +71,15 @@ class KelasController extends Controller
         $kelas->update($validated);
 
         return redirect()->route('kelas.index')
-            ->with('success', 'Kelas berhasil diper
+            ->with('success', 'Kelas berhasil diperbarui');
+    }
+
+    public function destroy($id)
+    {
+        $kelas = Kelas::findOrFail($id);
+        $kelas->delete();
+
+        return redirect()->route('kelas.index')
+            ->with('success', 'Kelas berhasil dihapus');
+    }
+}
