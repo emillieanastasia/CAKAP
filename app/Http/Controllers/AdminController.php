@@ -7,7 +7,7 @@ use App\Models\Pembayaran;
 
 use Illuminate\Http\Request;
 
-class admincontroller extends Controller{
+class AdminController extends Controller{
     public function dashboard(){
         $totalSiswa = User::where('role','siswa')->count();
         $totalTentor = User::where('role','tentor')->count();
