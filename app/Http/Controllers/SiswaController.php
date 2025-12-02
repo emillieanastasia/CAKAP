@@ -153,6 +153,7 @@ class SiswaController extends Controller
     {
         $user = auth()->user();
         $siswa = Siswa::firstOrNew(['user_id' => $user->id]);
+         $kelas = \App\Models\Kelas::all();
         return view('siswa.edit-profil', compact('user', 'siswa'));
     }
 
