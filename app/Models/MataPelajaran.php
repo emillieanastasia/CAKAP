@@ -8,14 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class MataPelajaran extends Model
 {
     use HasFactory;
+    
+    // Nama tabel di database
     protected $table = 'mata_pelajaran'; 
+    
+    // Kunci utama (primary key)
     protected $primaryKey = 'id';
-     public $timestamps = false;
+    
+    // Menonaktifkan kolom created_at dan updated_at
+    public $timestamps = false; // <-- CORRECT: Semicolon is present here
+    
+    // Kolom yang dapat diisi secara massal (mass assignable)
     protected $fillable = [
         'nama_mapel', 
         'deskripsi',
     ];
-    public $timestamps = false
-
-    // Secara default, Laravel mengasumsikan primary key adalah 'id' dan incrementing.
 }
