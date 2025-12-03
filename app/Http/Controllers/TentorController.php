@@ -126,35 +126,54 @@ class TentorController extends Controller
     }
 
     public function editSelf()
-    {
-        $tentor = Tentor::where('user_id', Auth::id())->firstOrFail();
-        $mataPelajaran = MataPelajaran::all();
+{
+    $tentor = Tentor::where('user_id', Auth::id())->firstOrFail();
+    $user = $tentor->user;
+    $mataPelajaran = MataPelajaran::all();
 
-        return view('tentor.edit.profil', compact('tentor','mataPelajaran'));
+    return view('tentor.edit.profil', compact('tentor', 'user', 'mataPelajaran'));
+}
+
+
+public function updateSelf(Request $request)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255|unique:users,email,' . Auth::id(),
+        'password' => 'nullable|min:8',
+        
+        'mata_pelajaran_id' => 'required|integer|exists:mata_pelajaran,id',
+        'pendidikan_terakhir' => 'nullable|string|max:100',
+        'alamat' => 'nullable|string',
+        'no_hp' => 'nullable|string|max:20',
+    ]);
+
+    $tentor = Tentor::where('user_id', Auth::id())->firstOrFail();
+    $user = $tentor->user;
+
+    // Update user
+    $user->name = $request->name;
+    $user->email = $request->email;
+
+    if ($request->password) {
+        $user->password = bcrypt($request->password);
     }
 
-    public function updateSelf(Request $request)
-    {
-        $request->validate([
-            'mata_pelajaran_id' => 'required|integer|exists:mata_pelajaran,id',
-            'pendidikan_terakhir' => 'nullable|string|max:100',
-            'alamat' => 'nullable|string',
-            'no_hp' => 'nullable|string|max:20',
-        ]);
+    $user->save();
 
-        $tentor = Tentor::where('user_id', Auth::id())->firstOrFail();
+    // Update tentor
+    $tentor->update([
+        'mata_pelajaran_id' => $request->mata_pelajaran_id,
+        'pendidikan_terakhir' => $request->pendidikan_terakhir,
+        'alamat' => $request->alamat,
+        'no_hp' => $request->no_hp,
+    ]);
 
-        $tentor->update([
-            'mata_pelajaran_id' => $request->mata_pelajaran_id,
-            'pendidikan_terakhir' => $request->pendidikan_terakhir,
-            'alamat' => $request->alamat,
-            'no_hp' => $request->no_hp,
-        ]);
+    return redirect()
+        ->route('dashboard-tentor')
+        ->with('success', 'Profil tentor berhasil diperbarui.');
+}
 
-        return redirect()
-            ->route('dashboard-tentor')
-            ->with('success', 'Profil tentor berhasil diperbarui.');
-    }
 
     public function destroy($id)
     {
