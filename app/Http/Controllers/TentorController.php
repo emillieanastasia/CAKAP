@@ -84,6 +84,7 @@ class TentorController extends Controller
                 'alamat' => $request->alamat,
                 'no_hp' => $request->no_hp,
                 'status' => $request->status,
+                'keahlian' => $request->keahlian,
             ]);
 
             return redirect()
@@ -108,6 +109,7 @@ class TentorController extends Controller
             'alamat' => 'nullable|string',
             'no_hp' => 'nullable|string|max:20',
             'status' => 'required|in:aktif,tidak aktif',
+            'keahlian' => 'required|string',
         ]);
 
         $tentor = Tentor::findOrFail($id);
@@ -118,6 +120,7 @@ class TentorController extends Controller
             'alamat' => $request->alamat,
             'no_hp' => $request->no_hp,
             'status' => $request->status,
+            'keahlian' => $request->keahlian,
         ]);
 
         return redirect()
@@ -146,6 +149,7 @@ public function updateSelf(Request $request)
         'pendidikan_terakhir' => 'nullable|string|max:100',
         'alamat' => 'nullable|string',
         'no_hp' => 'nullable|string|max:20',
+        'keahlian' => 'nullable|string',
     ]);
 
     $tentor = Tentor::where('user_id', Auth::id())->firstOrFail();
@@ -167,6 +171,7 @@ public function updateSelf(Request $request)
         'pendidikan_terakhir' => $request->pendidikan_terakhir,
         'alamat' => $request->alamat,
         'no_hp' => $request->no_hp,
+        'keahlian' => $request->keahlian,
     ]);
 
     return redirect()
