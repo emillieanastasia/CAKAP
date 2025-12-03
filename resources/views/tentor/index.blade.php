@@ -85,7 +85,7 @@
 
                         <td class="py-2 px-4">
                             <span class="text-sky font-medium bg-sky/5 px-2 py-0.5 rounded border border-sky/10 text-[10px]">
-                                {{ $t->keahlian ?? '-' }}
+                                {{ $t->mataPelajaran->nama_mapel ?? '-' }}
                             </span>
                         </td>
 
@@ -109,7 +109,7 @@
                             <div class="flex justify-center items-center gap-1.5">
 
                                 {{-- EDIT BUTTON --}}
-                                <a href="{{ route('tentor.edit.profil', $t->id) }}" 
+                                <a href="{{ route('tentor.edit.by.admin', $t->id) }}" 
                                     class="inline-block bg-gold hover:bg-lightgold text-navy font-bold px-3 py-1.5 rounded-lg text-xs shadow-md transition-all transform hover:-translate-y-0.5">
                                     
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" 

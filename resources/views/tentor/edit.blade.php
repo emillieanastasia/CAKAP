@@ -10,7 +10,7 @@
         <p class="text-sky text-xs mt-1">Perbarui data tentor.</p>
     </div>
 
-    <form method="POST" action="{{ route('tentor-update', $tentor->id) }}"
+    <form method="POST" action="{{ route('tentor.update.by.admin', $tentor->id) }}"
           class="bg-teal p-5 shadow-xl rounded-2xl border border-sky/10 relative overflow-hidden">
         @csrf
         @method('PUT')

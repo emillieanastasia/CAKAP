@@ -55,7 +55,8 @@ Route::middleware('auth')->group(function () {
 
 // --- Group Tentor ---
 Route::middleware(['auth'])->group(function() {
-     Route::get('/dashboard-tentor',[DashboardController::class,'dashboardTentor'])->name('dashboard-tentor');
+    // Route Tentor
+    Route::get('/dashboard-tentor',[DashboardController::class,'dashboardTentor'])->name('dashboard-tentor');
     Route::get('/tentor', [tentorcontroller::class, 'index'])->name('tentor.index');
     Route::get('/tentor/create', [TentorController::class, 'create'])->name('tentor.create');
     Route::post('/tentor', [TentorController::class, 'store'])->name('tentor.store');
