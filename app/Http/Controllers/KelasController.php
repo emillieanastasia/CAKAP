@@ -37,11 +37,11 @@ class KelasController extends Controller
         $validated = $request->validate([
             'kelas' => 'required|string',
             'nama_kelas' => 'required|string',
-            // Perhatikan: Jika di form menggunakan 'mapel', gunakan 'mapel', jika 'mata_pelajaran_id', gunakan 'mata_pelajaran_id'.
-            // Saya asumsikan Anda menggunakan convention 'mata_pelajaran_id' untuk Foreign Key.
             'mata_pelajaran_id' => 'required|exists:mata_pelajaran,id', 
             'harga' => 'required|numeric',
-            'tentor_id' => 'required|exists:tentors,id',
+            
+            // REVISI: Mengubah 'tentors' menjadi 'tentor' untuk konsistensi dengan metode update
+            'tentor_id' => 'required|exists:tentor,id', 
         ]);
 
         Kelas::create($validated);
@@ -64,18 +64,18 @@ class KelasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Revisi: Memastikan nama field validasi sesuai dengan yang dikirim dari View.
+        // Validasi ini sudah benar dan menggunakan 'tentor'
         $validated = $request->validate([
             'kelas' => 'required|string',
             'nama_kelas' => 'required|string',
-            'mata_pelajaran_id' => 'required|exists:mata_pelajaran,id', // Diperbaiki dari 'mapel'
+            'mata_pelajaran_id' => 'required|exists:mata_pelajaran,id', 
             'harga' => 'required|numeric',
-            'tentor_id' => 'required|exists:tentor,id', // Ditambahkan karena wajib ada di form
+            'tentor_id' => 'required|exists:tentor,id', 
         ]);
 
         $kelas = Kelas::findOrFail($id);
         
-        // Pastikan model Kelas memiliki semua field ini di properti $fillable!
+        // Pastikan model Kelas memiliki kolom-kolom ini di properti $fillable!
         $kelas->update($validated);
 
         return redirect()->route('kelas.index')
