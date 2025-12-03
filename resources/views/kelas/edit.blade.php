@@ -93,6 +93,25 @@
 
         </div>
 
+        {{-- TENTOR_ID (Tambahkan DIV ini) --}}
+        <div class="mb-1 relative z-10">
+             <label for="tentor_id" class="block font-semibold mb-1 text-[#A8E8F9] text-xs">
+                 Tentor <span class="text-red-400">*</span>
+         </label>
+          <select name="tentor_id" id="tentor_id"
+             class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#FFD700] bg-[#00537A] text-white border-[#A8E8F9] appearance-none cursor-pointer" required>
+                 <option value="" disabled>-- Pilih Tentor --</option>
+       {{-- Loop $tentor diambil dari method edit di Controller --}}
+        @foreach($tentor as $t)
+            <option value="{{ $t->id }}"
+                {{ old('tentor_id', $kelas->tentor_id) == $t->id ? 'selected' : '' }}>
+                {{ $t->nama }}
+            </option>
+        @endforeach
+    </select>
+    @error('tentor_id') <p class="text-red-400 text-[10px] mt-1">{{ $message }}</p> @enderror
+</div>
+
         {{-- TOMBOL AKSI --}}
         <div class="relative z-10 flex justify-end items-center gap-3 mt-6 pt-3 border-t border-[#A8E8F9]/20">
             {{-- Tombol Update --}}
