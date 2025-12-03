@@ -189,6 +189,7 @@ class SiswaController extends Controller
                 'tanggal_lahir' => $request->tanggal_lahir,
                 'no_hp'         => $request->no_hp,
                 'alamat'        => $request->alamat,
+                'kelas'         => $request->kelas
             ]);
         }
 

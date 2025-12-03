@@ -80,13 +80,11 @@
                                 <option value="">-- Pilih Kelas --</option>
 
                                @foreach($kelas as $k)
-                                    <option value="{{ $k->kelas }}|{{ $k->nama_kelas }}"
+                                    <option value="{{ $k->kelas }}"
                                         @if(old('kelas', $siswa->kelas) == $k->kelas) selected @endif>
                                         {{ $k->kelas }} - {{ $k->nama_kelas }}
                                     </option>
                                 @endforeach
-
-
                             </select>
                         </div>
 
