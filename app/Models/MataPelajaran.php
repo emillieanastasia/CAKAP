@@ -14,6 +14,7 @@ class MataPelajaran extends Model
         'nama_mapel', 
         'deskripsi',
     ];
+    public $timestamps = false
 
     // Secara default, Laravel mengasumsikan primary key adalah 'id' dan incrementing.
 }
