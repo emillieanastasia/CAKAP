@@ -70,7 +70,7 @@ class KelasController extends Controller
             'nama_kelas' => 'required|string',
             'mata_pelajaran_id' => 'required|exists:mata_pelajaran,id', // Diperbaiki dari 'mapel'
             'harga' => 'required|numeric',
-            'tentor_id' => 'required|exists:tentors,id', // Ditambahkan karena wajib ada di form
+            'tentor_id' => 'required|exists:tentor,id', // Ditambahkan karena wajib ada di form
         ]);
 
         $kelas = Kelas::findOrFail($id);
